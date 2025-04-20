@@ -11,10 +11,10 @@ class HandDetector:
 
         self.mpHands = mp.solutions.hands
         self.hands = self.mpHands.Hands(
-            static_image_mode=self.mode,  # Set to False for video input (Dynamic)
-            max_num_hands=self.maxHands,  # Maximum number of hands to detect
-            min_detection_confidence=self.detectionCon,  # Confidence for detection
-            min_tracking_confidence=self.trackCon  # Confidence for tracking
+            static_image_mode=self.mode,  #Set to False for video input (Dynamic)
+            max_num_hands=self.maxHands,  #Maximum number of hands to detect
+            min_detection_confidence=self.detectionCon,  #Confidence for detection
+            min_tracking_confidence=self.trackCon  #Confidence for tracking
         )
         self.mpDraw = mp.solutions.drawing_utils
 
