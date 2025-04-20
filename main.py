@@ -4,7 +4,7 @@ from HandTracking import HandDetector
 
 #Button Class
 class Button:
-    def __init__(self, pos, width, height, value):
+    def __init__(self, pos, width, height, value): 
         self.pos = pos
         self.width = width
         self.height = height
@@ -96,7 +96,7 @@ while True:
             end = lmList[connection[1]]
             cv2.line(img, start, end, (0, 255, 255), 2)
 
-        # Draw landmarks and coordinates
+        # Draw landmarks and     coordinates
         for idx, point in enumerate(lmList):
             cv2.circle(img, point, 5, (0, 0, 255), cv2.FILLED)
 
