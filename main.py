@@ -84,6 +84,9 @@ while True:
         cv2.rectangle(img, (bbox[0] - 20, bbox[1] - 20),
                       (bbox[2] + 20, bbox[3] + 20),
                       (0, 255, 0), 3)
+        # Display "Left" or "Right" at the top-left corner of the box
+        cv2.putText(img, hand['type'], (bbox[0] - 30, bbox[1] - 30),
+                    cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
 
         # Draw lines (skeleton) using connections from MediaPipe
         from mediapipe.python.solutions.hands import HAND_CONNECTIONS

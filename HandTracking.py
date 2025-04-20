@@ -25,7 +25,8 @@ class HandDetector:
         h, w, c = img.shape
 
         if self.results.multi_hand_landmarks:
-            for handLms in self.results.multi_hand_landmarks:
+            for handLms, handType in zip(self.results.multi_hand_landmarks,
+                                         self.results.multi_handedness):
                 hand = {}
                 lmList = []
                 xList = []
@@ -44,6 +45,7 @@ class HandDetector:
 
                 hand['lmList'] = lmList
                 hand['bbox'] = bbox
+                hand['type'] = handType.classification[0].label  # "Left" or "Right"
                 allHands.append(hand)
 
         return allHands, img
