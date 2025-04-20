@@ -28,16 +28,23 @@ class HandDetector:
             for handLms in self.results.multi_hand_landmarks:
                 hand = {}
                 lmList = []
+                xList = []
+                yList = []
+
                 for id, lm in enumerate(handLms.landmark):
                     cx, cy = int(lm.x * w), int(lm.y * h)
                     lmList.append((cx, cy))
+                    xList.append(cx)
+                    yList.append(cy)
+
+                # Bounding box
+                xMin, xMax = min(xList), max(xList)
+                yMin, yMax = min(yList), max(yList)
+                bbox = xMin, yMin, xMax, yMax
 
                 hand['lmList'] = lmList
+                hand['bbox'] = bbox
                 allHands.append(hand)
-
-                if draw:
-                    self.mpDraw.draw_landmarks(img, handLms,
-                                               self.mpHands.HAND_CONNECTIONS)
 
         return allHands, img
 

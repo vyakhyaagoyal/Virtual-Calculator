@@ -1,4 +1,5 @@
 import cv2
+from mediapipe.python.solutions.hands import HAND_CONNECTIONS
 from HandTracking import HandDetector
 
 #Button Class
@@ -73,11 +74,31 @@ while True:
 
     #Hand logic
     if hands:
-        lmList = hands[0]['lmList']
-        x, y = lmList[8]  # index finger tip
+        hand = hands[0]
+        lmList = hand['lmList']
+        bbox = hand['bbox']
 
-        #Detect click(index and middle finger close)
-        length, _, img = detector.findDistance(lmList[8], lmList[12], img, draw=False)
+        x, y = lmList[8]  # Index finger tip
+
+        # Draw bounding box
+        cv2.rectangle(img, (bbox[0] - 20, bbox[1] - 20),
+                      (bbox[2] + 20, bbox[3] + 20),
+                      (0, 255, 0), 3)
+
+        # Draw lines (skeleton) using connections from MediaPipe
+        from mediapipe.python.solutions.hands import HAND_CONNECTIONS
+
+        for connection in HAND_CONNECTIONS:
+            start = lmList[connection[0]]
+            end = lmList[connection[1]]
+            cv2.line(img, start, end, (0, 255, 255), 2)
+
+        # Draw landmarks and coordinates
+        for idx, point in enumerate(lmList):
+            cv2.circle(img, point, 5, (0, 0, 255), cv2.FILLED)
+
+        # Detect click (index and middle finger close)
+        length, _, _ = detector.findDistance(lmList[8], lmList[12], img, draw=False)
 
         if length < 40 and delayCounter == 0:
             for button in buttons:
